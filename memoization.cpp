@@ -7,12 +7,14 @@ int knapsack(int weight[],int value[],int capacity,int n)
 
 
 
-        if(capacity==0||n==0||weight[n-1]>capacity)
+        if(capacity==0||n==0)
             return 0;
+        if(weight[n-1]>capacity)
+            return knapsack(weight,value,capacity,n-1);
         if(dp[n-1][capacity]!=-1)
             return dp[n-1][capacity];
         if (weight[n-1]<=capacity)
-            return dp[n-1][capacity]=max(value[n-1]+knapsack(weight,value,capacity-value[n-1],n-1),knapsack(weight,value,capacity,n-1));
+            return dp[n-1][capacity]=max(value[n-1]+knapsack(weight,value,capacity-weight[n-1],n-1),knapsack(weight,value,capacity,n-1));
     }
 int main()
     {
@@ -33,7 +35,7 @@ int main()
             cin>>value[i];
         }
 
-        cout<<knapsack(weight,value,capacity,n);
-
+        knapsack(weight,value,capacity,n);
+        cout<<dp[n-1][capacity];
         return 0;
     }
